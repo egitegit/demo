@@ -16,11 +16,14 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ShowImageFromDB extends JFrame {
 
@@ -30,6 +33,28 @@ public class ShowImageFromDB extends JFrame {
 	private String[] imageNames;
 	private java.sql.Blob[] imageDatas;
 	JLabel lblNewLabel = new JLabel();
+	
+	static String driver;
+	static String url;
+	static String user;
+	static String password;
+	
+	static void getConnParam() {
+		Properties properties = new Properties();
+		try {
+			properties.load(new FileInputStream("mysql.properties"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver = properties.getProperty("driver");
+		url = properties.getProperty("url");
+		user = properties.getProperty("user");
+		password = properties.getProperty("password");
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -76,11 +101,7 @@ public class ShowImageFromDB extends JFrame {
 	}
 
 	private void getImage() {
-		String driver = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://192.168.100.102:3306/test";
-		String user = "root";
-		String password = "1219root";
-		String imagePath = "src" + File.separator + "images";
+		String imagePath = "images";
 
 		try {
 			Class.forName(driver);
@@ -128,6 +149,5 @@ public class ShowImageFromDB extends JFrame {
 				e1.printStackTrace();
 			}
 		}
-		
 	}
 }

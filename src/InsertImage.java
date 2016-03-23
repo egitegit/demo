@@ -1,18 +1,38 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+
+import com.mysql.jdbc.PreparedStatement;
 
 public class InsertImage {
-	public static void main(String[] args) {
-		String driver = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://192.168.100.102:3306/test";
-		String user = "root";
-		String password = "1219root";
-		String imagePath = "src" + File.separator + "images";
-
+	static String driver;
+	static String url;
+	static String user;
+	static String password;
+	
+	static void getConnParam() {
+		Properties properties = new Properties();
+		try {
+			properties.load(new FileInputStream("mysql.properties"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver = properties.getProperty("driver");
+		url = properties.getProperty("url");
+		user = properties.getProperty("user");
+		password = properties.getProperty("password");
+	}
+	
+	static void insertImages(String imagePath) {
 		try {
 			Class.forName(driver);
 			Connection conn = DriverManager.getConnection(url, user, password);
@@ -20,16 +40,18 @@ public class InsertImage {
 			if (!conn.isClosed())
 				System.out.println("Succeeded connecting to the Database!");
 
-			java.sql.PreparedStatement psPreparedStatement = conn.prepareStatement("insert into images values(?, ?)");
+			java.sql.PreparedStatement preparedStatement = conn.prepareStatement("delete * from images");
+			preparedStatement.execute();
+			preparedStatement = conn.prepareStatement("insert into images values(?, ?)");
 
 			File[] files = new File(imagePath).listFiles();
 			for (File file : files) {
-				psPreparedStatement.setString(1, file.getName());
-				psPreparedStatement.setBlob(2, new FileInputStream(file));
-				psPreparedStatement.execute();
+				preparedStatement.setString(1, file.getName());
+				preparedStatement.setBlob(2, new FileInputStream(file));
+				preparedStatement.execute();
 				System.out.println("insert " + file.getName());
 			}
-			psPreparedStatement.close();
+			preparedStatement.close();
 			conn.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -41,7 +63,9 @@ public class InsertImage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
+	public static void main(String[] args) {
+		getConnParam();
+		insertImages("images");
+	}
 }

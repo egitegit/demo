@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -6,7 +7,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class JarReader {
-	private String jarFilePath = "/home/you/workspace2/c.jar";
+	private String jarFilePath = new File(System.getProperty("user.dir")).getParent() + File.separator + "c.jar";
 	
 	public List<String> read() {
 		List<String> list = new ArrayList<String>();

@@ -78,7 +78,7 @@ public class IndexFileDemo extends JFrame {
 		headerPanel.add(textField);
 		headerPanel.add(selectButton);
 		textField.setPreferredSize(new Dimension(100, 20));
-		textField.setText("/home/you/workspace2/demo/index.txt");
+		textField.setText("index.txt");
 
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setViewportView(list);
@@ -87,7 +87,7 @@ public class IndexFileDemo extends JFrame {
 		bottomPanel.setLayout(new FlowLayout());
 
 		bottomPanel.add(textField_1);
-		textField_1.setText("/home/you/workspace2/demo/src");
+		textField_1.setText(new File("src").getAbsolutePath());
 
 		bottomPanel.add(btnNewButton);
 		bottomPanel.add(createButton);

@@ -2,25 +2,17 @@ package xx;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.ProgressMonitorInputStream;
 import javax.swing.border.EmptyBorder;
-
-import com.sun.accessibility.internal.resources.accessibility;
-
-import sun.org.mozilla.javascript.ast.WhileLoop;
 
 import javax.swing.JButton;
 
@@ -89,7 +81,7 @@ public class Monitor extends JFrame implements Runnable {
 		FileInputStream inputStream = null;
 		try {
 //			String path = "/media/you/新加卷/kankan/生活大爆炸.The.Big.Bang.Theory.S01E03.Chi_Eng.HR-HDTV.AAC.1024X576.x264-YYeTs人人影视.mkv";
-			String path = "/home/you/workspace2/demo/src/forests2.jpg";
+			String path = "src" + File.separator + "forests2.jpg";
 			File file = new File(path);
 			inputStream = new FileInputStream(file);
 

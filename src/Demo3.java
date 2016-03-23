@@ -4,19 +4,19 @@ public class Demo3 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String path = "src" + File.separator + "images" + File.separator;
+		String path = "images";
 		File[] files = new File(path).listFiles();
-		for(File file : files) {
-			if(file.getName().matches("forests\\d\\.jpg")) {
-				String newPath = file.getAbsolutePath();
-				String parent = file.getParent();
-				String pString = file.getPath();
-				
-				newPath = newPath.replaceFirst("forests_(\\d)\\.jpg", "forests$1\\.jpg");
-				File newFile = new File(newPath);
+		for (File file : files) {
+			String newName = null;
+			if (file.getName().matches("forests\\d\\.jpg")) {
+				newName = file.getName().replaceFirst("forests(\\d)\\.jpg", "forests_$1\\.jpg");
+			} else if (file.getName().matches("forests_\\d\\.jpg")) {
+				newName = file.getName().replaceFirst("forests_(\\d)\\.jpg", "forests$1\\.jpg");
+			}
+			if (newName != null) {
+				File newFile = new File(file.getParent() + File.separator + newName);
 				file.renameTo(newFile);
 			}
 		}
 	}
-
 }

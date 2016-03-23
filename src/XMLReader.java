@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class XMLReader {
-	private String xmlFile = "/home/you/workspace2/demo/TestLog.xml";
+	private String xmlFile = "TestLog.xml";
 
 	public List<String> read() {
 		List<String> list = new ArrayList<String>();
